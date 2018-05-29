@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('./partials/navbar')%>
+    <div class="container">
+            <h2>Login</h2>
+            <h4>Login using the form below</h4>
+            <form action="/users/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Name</label>
+                    <input type="email" class="form-control" id="username" name="name"  aria-describedby="emailHelp" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label for="userpassword">Password</label>
+                    <input type="password" class="form-control" id="userpassword" name="password" placeholder="Password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" name="submit" value="Login">Submit</button>
+            </form>
+    </div>
+</body>
+</html>
