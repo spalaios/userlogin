@@ -27,19 +27,21 @@ router.get('/', (req, res, next) => {
 router.get('/register', (req, res, next) => {
     res.render('register', {
         title : 'register',
-        errorsArray : []
+        errors : [{}]
     });
 });
 
 
 router.post('/register',[
-    check('name').isLength({min : 5})
+    check('name').isLength({min : 5}).withMessage('name field cannot be empty'),
+    check('email').isEmail().withMessage('email validation failed due to improper email input')
 ], upload.single('profileimage'),(req, res, next) => {
     const errors = validationResult(req);
+    console.log(errors.array());
     if(!errors.isEmpty()) {
         res.render('register', {
             title : 'register',
-            errorsArray : ['e1', 'e2']
+            errors : errors.array()
         });
     } else {
         res.render('login', {

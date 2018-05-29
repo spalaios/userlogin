@@ -38,11 +38,9 @@
                 <button type="submit" class="btn btn-primary" name="submit" value="Register">Submit</button>
             </form>
 
-            <ul>
-            <% for(var i=0;i<errorsArray.length;i++) {%>
-            <li><% errorsArray[i]%></li>
+            <% for(let i=0;i<errors.length;i++) {%>
+            <p><%- errors[i].msg%></p>
             <%}%>
-            </ul>
     </div>
 
 </body>
