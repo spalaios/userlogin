@@ -2,6 +2,7 @@ const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
 const logger = require('morgan');
+var expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
@@ -25,6 +26,26 @@ app.use(express.static('public'));
 //serve the files in uploads 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// Validator
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        console.log('param '+param);
+        var namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
+  
+      while(namespace.length) {
+        formParam += '[' + namespace.shift() + ']';
+      }
+      return {
+        param : formParam,
+        msg   : msg,
+        value : value
+      };
+    }
+  }));
 
 //app routes 
 

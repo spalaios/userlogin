@@ -32,22 +32,29 @@ router.get('/register', (req, res, next) => {
 });
 
 
-router.post('/register', upload.single('profileimage'),[
-    check('name').isLength({min:5}).withMessage('name cannot be empty'),
-    check('email').isEmpty().withMessage('email cannot be empty')
-],(req, res, next) => {
-    const errors = validationResult(req);
-    console.log(errors.array());
-    if(!errors.isEmpty()) {
-        res.render('register', {
-            title : 'register',
-            errors : errors.array()
-        });
-    } else {
-        res.render('login', {
-            title : 'login'
-        });
-    }
+router.post('/register', upload.single('profileimage'),(req, res, next) => {
+     // Form Validator
+  req.checkBody('name','Name field is required').notEmpty();
+  req.checkBody('email','Email field is required').notEmpty();
+  req.checkBody('email','Email is not valid').isEmail();
+  req.checkBody('password','Password field is required').notEmpty();
+  req.checkBody('confirmpassword','Passwords do not match').equals(req.body.password);
+
+  // Check Errors
+  var errors = req.validationErrors();
+
+  if(errors){
+      console.log(errors);
+  	res.render('register', {
+        title : 'register',
+  		errors: errors
+      });
+    //   return res.json({
+    //       errors : errors
+    //   });
+  } else{
+  	console.log('No Errors');
+  }
 });
 
 
